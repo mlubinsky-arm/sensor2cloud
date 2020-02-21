@@ -79,16 +79,25 @@ optional arguments:
 ```
 
 ## Mbed-cli in Docker
-
+Clone this project:
+```
+cd ~/GIT
+git clone git@github.com:mlubinsky-arm/sensor2cloud.git
+```
+Install Docker image with Mbed-cli from
 <https://hub.docker.com/r/mbedos/mbed-os-env>
 ```
 docker pull mbedos/mbed-os-env
+```
+Run container and mount the volume with git code:
+```
 docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mbed-os-env
+cd /mnt/sensor2cloud
 mbed deploy  // to get all dependencies
 mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM
 ```
 
-## Pelion Device Management
+## Pelion Device Management Links
 <https://os.mbed.com/teams/mbed-os-examples/code/mbed-os-example-pelion/>
 
 <https://www.pelion.com/docs/device-management/current/connecting/device-management-client-tutorials.html>
