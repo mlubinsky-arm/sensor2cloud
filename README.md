@@ -84,6 +84,8 @@ optional arguments:
 ```
 docker pull mbedos/mbed-os-env
 docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mbed-os-env
+mbed deploy  // to get all dependencies
+mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM
 ```
 
 ## Pelion Device Management
