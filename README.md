@@ -33,6 +33,18 @@ It is because the cerificate is not provided in this repo.
 To generate mbed_cloud_dev_credentials.c file follow instructions:
  <https://www.pelion.com/docs/device-management/current/provisioning-process/provisioning-development-devices.html>
 
+Configure Mbed CLI to use your Device Management account and board
+```
+mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>
+```
+Initialize firmware credentials (done once per repository).
+Download a developer certificate and to create the update-related configuration for your device
+```
+mbed dm init -d "<your company name in Pelion DM>" --model-name "<product model identifier>" -q --force
+
+mbed device-management init -d arm.com --model-name example-app --force -q
+```
+
 The file mbed_cloud_dev_credentials.c should look like this:
 ```
 const char MBED_CLOUD_DEV_BOOTSTRAP_ENDPOINT_NAME[] = "017064b32c8c724d89b03fd003c00000";
@@ -57,6 +69,8 @@ onst uint8_t MBED_CLOUD_DEV_BOOTSTRAP_DEVICE_PRIVATE_KEY[] =
 Also the file update_default_resources.c should be updated.
 Look here for instructions:
 <https://www.pelion.com/docs/device-management/v1.5/updating-firmware/setting-up.html>
+
+Try compile again. It should work now.
 
 ## Mbed-cli notes
 
