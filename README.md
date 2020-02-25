@@ -39,6 +39,9 @@ mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>
 ```
 mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM
 ```
+If everyting works as expected you will see the line:
+
+Image: ./BUILD/NUCLEO_H743ZI2/GCC_ARM/sensor2cloud.bin
 
 ### Initialize firmware credentials (done once per repository).
 Download a developer certificate and to create the update-related configuration for your device
