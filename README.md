@@ -56,7 +56,24 @@ Also the file update_default_resources.c should be updated.
 Look here for instructions:
 <https://www.pelion.com/docs/device-management/v1.5/updating-firmware/setting-up.html>
 
- 
+
+##  Manifest file and  the firmware update
+
+<https://www.pelion.com/docs/device-management/current/updating-firmware/integrating-the-client-in-your-application.html>
+
+<https://www.pelion.com/docs/device-management/current/updating-firmware/preparing-manifests.html>
+
+<https://www.pelion.com/docs/device-management/current/updating-firmware/manifest-tool.html>
+
+## Pelion Device Management Links
+<https://os.mbed.com/teams/mbed-os-examples/code/mbed-os-example-pelion/>
+
+<https://www.pelion.com/docs/device-management/current/connecting/device-management-client-tutorials.html>
+
+<https://github.com/ARMmbed/mbed-cloud-client-example>
+
+<https://github.com/BlackstoneEngineering/aiot-workshop> 
+
 ## Mbed-cli notes
 
 ```
@@ -139,11 +156,3 @@ optional arguments:
   -vv, --very_verbose   Very verbose diagnostic output
 ```
 
-## Pelion Device Management Links
-<https://os.mbed.com/teams/mbed-os-examples/code/mbed-os-example-pelion/>
-
-<https://www.pelion.com/docs/device-management/current/connecting/device-management-client-tutorials.html>
-
-<https://github.com/ARMmbed/mbed-cloud-client-example>
-
-<https://github.com/BlackstoneEngineering/aiot-workshop>
