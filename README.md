@@ -43,6 +43,12 @@ If everyting works as expected you will see the line:
 
 Image: ./BUILD/NUCLEO_H743ZI2/GCC_ARM/sensor2cloud.bin
 
+There are 3 bin files generated for the main application
+
+*  "[ProjectName].bin - The full image, it combines the application with the bootloader and metadata, and is used for the initial programming of the device
+*  "[ProjectName]_application.bin"  - the same as [ProjectName]_update.bin. It contains only the application and is used for updating the device
+*  "[ProjectName]_update.bin"       - the same as [ProjectName]_application.bin. It contains only the application and is used for updating the device
+
 ### Initialize firmware credentials (done once per repository).
 Download a developer certificate and to create the update-related configuration for your device
 ```
