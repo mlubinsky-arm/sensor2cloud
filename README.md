@@ -24,7 +24,7 @@ mbed deploy  // to get all dependencies described in files with .lib extension
 mbed ls .    // see dependecy and lib versions 
 ```
 
-### Download  mbed_cloud_dev_credentials.c 
+### Get a device cerificate: download  mbed_cloud_dev_credentials.c from Pelion Device Manager
  
 To generate mbed_cloud_dev_credentials.c file follow instructions:
  <https://www.pelion.com/docs/device-management/current/provisioning-process/provisioning-development-devices.html>
@@ -49,8 +49,67 @@ There are 3 bin files generated for the main application
 *  "[ProjectName]_application.bin"  - the same as [ProjectName]_update.bin. It contains only the application and is used for updating the device
 *  "[ProjectName]_update.bin"       - the same as [ProjectName]_application.bin. It contains only the application and is used for updating the device
 
-### Initialize firmware credentials (done once per repository).
-Download a developer certificate and to create the update-related configuration for your device
+### Initialize the firmware update credentials
+
+To enable you to create an update image that can be installed on the device, you need to create an authentication certificate that is delivered with the firmware update.  You use the manifest tool to generate the authentication certificate
+Look here for instructions:
+<https://www.pelion.com/docs/device-management/v1.5/updating-firmware/setting-up.html>
+
+File which will be updated: update_default_resources.c
+
+The commands ```mbed dm``` and ```manifest-tool``` are the same - here is the proof:
+
+The help  for ``mbed dm``:
+```
+mbed dm --help
+usage: mbed device-management [-h] [-l {debug,info,warning,exception}]
+                              [--version]
+                              {create,parse,verify,cert,init,sign,update} ...
+
+Create or transform a manifest. Use mbed device-management [command] -h for
+help on each command.
+
+positional arguments:
+  {create,parse,verify,cert,init,sign,update}
+    create              Create a new manifest
+    parse               Parse an existing manifest
+    verify              Verify an existing manifest
+    cert                Create or examine a certificate
+    init                Set default values for manifests
+    sign                Sign an existing manifest
+    update              Work with the Device Management Update service
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l {debug,info,warning,exception}, --log-level {debug,info,warning,exception}
+  --version             display the version
+```
+The help for manifest-tool:
+```
+manifest-tool --help
+usage: manifest-tool [-h] [-l {debug,info,warning,exception}] [--version]
+                     {create,parse,verify,cert,init,sign,update} ...
+
+Create or transform a manifest. Use /usr/local/bin/manifest-tool [command] -h
+for help on each command.
+
+positional arguments:
+  {create,parse,verify,cert,init,sign,update}
+    create              Create a new manifest
+    parse               Parse an existing manifest
+    verify              Verify an existing manifest
+    cert                Create or examine a certificate
+    init                Set default values for manifests
+    sign                Sign an existing manifest
+    update              Work with the Device Management Update service
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l {debug,info,warning,exception}, --log-level {debug,info,warning,exception}
+  --version             display the version
+```
+
+Download a developer certificate and to create the update-related configuration for your device:
 ```
 mbed dm init -d "<your company name in Pelion DM>" --model-name "<product model identifier>" -q --force
 
@@ -58,12 +117,7 @@ Example:
 mbed dm init -d arm.com --model-name example-app  -q --force
 ```
 
-Also the file update_default_resources.c should be updated.
-Look here for instructions:
-<https://www.pelion.com/docs/device-management/v1.5/updating-firmware/setting-up.html>
-
-
-##  Manifest file and  the firmware update
+##  The Firmware Update Links
 
 <https://www.pelion.com/docs/device-management/current/updating-firmware/integrating-the-client-in-your-application.html>
 
@@ -80,7 +134,7 @@ Look here for instructions:
 
 <https://github.com/BlackstoneEngineering/aiot-workshop> 
 
-## Mbed-cli notes
+## Mbed-cli Notes
 
 ```
 $ mbed new .  // will create files: .med mbed-os.lib mbed_app.json mbed_settings.py and folder: mbed-os
