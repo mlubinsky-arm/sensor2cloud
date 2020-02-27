@@ -2,21 +2,40 @@
 
 ## Mbed-cli in Docker
 
-Compiling in docker may be slow 1st time because the entire mbedos will be compiled from scratch.
-See discussion here:
-<https://github.com/ARMmbed/mbed-cli/issues/894>
+Install Docker image with Mbed-cli from <https://hub.docker.com/r/mbedos/mbed-os-env>
+```
+docker pull mbedos/mbed-os-env
+```
+Run container:
+```
+docker run  -i -t mbedos/mbed-os-env
+```
+Let see what is inside this container:
+```
+$ python3 -V
+Python 3.6.9
+
+$ pip3 list | grep mbed
+
+mbed-cli (1.10.2)
+mbed-cloud-sdk (2.0.8)       https://github.com/ARMmbed/mbed-cloud-sdk-python
+mbed-flasher (0.10.1)
+mbed-greentea (1.7.4)
+mbed-host-tests (1.5.10)
+mbed-ls (1.7.10)
+mbed-os-tools (0.0.12)
+```
+Compiling mbed project in docker may be slow 1st time because the entire MbedOS will be compiled from scratch.
+See discussion here: <https://github.com/ARMmbed/mbed-cli/issues/894>
+
+### Download your mbed project and make it visible to docker:
 
 Clone this project:
 ```
 cd ~/GIT
 git clone git@github.com:mlubinsky-arm/sensor2cloud.git
 ```
-Install Docker image with Mbed-cli from
-<https://hub.docker.com/r/mbedos/mbed-os-env>
-```
-docker pull mbedos/mbed-os-env
-```
-Run container and mount the volume with git code:
+Run container and mount the volume with your project code:
 ```
 docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mbed-os-env
 cd /mnt/sensor2cloud
@@ -133,6 +152,19 @@ mbed dm init -d arm.com --model-name example-app  -q --force
 <https://github.com/ARMmbed/mbed-cloud-client-example>
 
 <https://github.com/BlackstoneEngineering/aiot-workshop> 
+
+
+## Pelion REST API
+
+Host: https://api.us-east-1.mbedcloud.com
+
+<https://www.pelion.com/docs/device-management/current/service-api-references/update-service.html>
+
+<https://www.pelion.com/docs/device-management/current/service-api-references/service-api-documentation.html>
+
+https://armmbed.github.io/mbed-cloud-sdk-documentation/#introduction
+
+<https://github.com/ARMmbed/mbed-cloud-sdk-python>
 
 ## Mbed-cli Notes
 
