@@ -44,7 +44,7 @@ docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mb
 cp -r  /mnt/sensor2cloud ~           # To speed up compilation copy code into docker
 
 Another option - just get the code directly from cloud to docker:
-```
+
 mbed import https://github.com/mlubinsky-arm/sensor2cloud
 
 cd ~/sensor2cloud
