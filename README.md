@@ -28,6 +28,8 @@ mbed-os-tools (0.0.12)
 Compiling mbed project in docker may be slow 1st time because the entire MbedOS will be compiled from scratch.
 See discussion here: <https://github.com/ARMmbed/mbed-cli/issues/894>
 
+ 
+
 ### Download your mbed project and make it visible to docker:
 
 Clone this project:
@@ -38,7 +40,11 @@ git clone git@github.com:mlubinsky-arm/sensor2cloud.git
 Run container and mount the volume with your project code:
 ```
 docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mbed-os-env
-cd /mnt/sensor2cloud
+ 
+cp -r  /mnt/sensor2cloud ~           # To speed up compilation copy code into docker
+cd ~/sensor2cloud
+
+
 mbed deploy  // to get all dependencies described in files with .lib extension
 mbed ls .    // see dependecy and lib versions 
 ```
@@ -49,7 +55,11 @@ To generate mbed_cloud_dev_credentials.c file follow instructions:
  <https://www.pelion.com/docs/device-management/current/provisioning-process/provisioning-development-devices.html>
 
 Download  mbed_cloud_dev_credentials.c from  https://portal.mbedcloud.com/identity/certificates/list/ and put it in the current project folder.
-
+This is the important lines in the file, which can be tracked in Pelion Web UI
+```
+const char MBED_CLOUD_DEV_BOOTSTRAP_ENDPOINT_NAME[] = "017064b32c8c724d89b03fd003c00000";  // Pelion deviceId
+const char MBED_CLOUD_DEV_ACCOUNT_ID[] =  "0170a2c070bf000000000001001883bd";  // Pelion campain id
+```
 ### Configure Mbed CLI to use your Device Management account and board
 ```
 mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>

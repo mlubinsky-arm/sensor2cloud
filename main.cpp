@@ -41,7 +41,7 @@
 NetworkInterface *net = NetworkInterface::get_default_instance();
 
 #define BUFF_SIZE   100 // used by td rest api
-TreasureData_RESTAPI* td = new TreasureData_RESTAPI(net,"aiot_workshop_db",MBED_CONF_APP_TABLE_NAME, MBED_CONF_APP_API_KEY);
+TreasureData_RESTAPI* td = new TreasureData_RESTAPI(net, "michael_aiot_workshop_db", MBED_CONF_APP_TABLE_NAME, MBED_CONF_APP_API_KEY);
 
 /* Instantiate the expansion board */
 static XNucleoIKS01A3 *mems_expansion_board = XNucleoIKS01A3::instance(D14, D15, D4, D5, A3, D6, A4);
@@ -159,7 +159,9 @@ void sensors_update() {
     int x = 0;
     x = sprintf(td_buff,"{\"temp\":%f,\"humidity\":%f,\"pressure\":%f}", temp_value,humidity_value,pressure_value);
     td_buff[x]=0; //null terminate string
-    td->sendData(td_buff,strlen(td_buff));
+
+    int result = td->sendData(td_buff,strlen(td_buff));
+    printf("NEW IMAGE result=%d \n", result);
 
 }
 
@@ -177,7 +179,8 @@ void main_application(void)
 
     // SimpleClient is used for registering and unregistering resources to a server.
     SimpleM2MClient mbedClient;
-
+    
+    printf("Hello ...\n");
     // Save pointer to mbedClient so that other functions can access it.
     client = &mbedClient;
     (void) mcc_platform_interface_init();
@@ -199,6 +202,7 @@ void main_application(void)
     if (!mcc_platform_interface_connect()) {
         printf("Network initialized, registering...\n");
     } else {
+         printf("Network not initialized??? ...\n");
         return;
     }
 
