@@ -42,11 +42,46 @@ Run container and mount the volume with your project code:
 docker run -v /Users/miclub01/GIT/sensor2cloud:/mnt/sensor2cloud -i -t mbedos/mbed-os-env
  
 cp -r  /mnt/sensor2cloud ~           # To speed up compilation copy code into docker
-cd ~/sensor2cloud
 
+Another option - just get the code directly from cloud to docker:
+```
+mbed import https://github.com/mlubinsky-arm/sensor2cloud
+
+cd ~/sensor2cloud
 
 mbed deploy  // to get all dependencies described in files with .lib extension
 mbed ls .    // see dependecy and lib versions 
+mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>
+mbed dm init -d "arm.com" --model-name "mbed" -q –-force
+mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM --flash -DRESET_STORAGE
+Comment: flag -DRESET_STORAGE should be applied only once  
+
+Copied Image  ./BUILD/NUCLEO_H743ZI2/GCC_ARM/sensor2cloud.bin to bard
+Edit main.cpp - modify print statement to make a visible difference
+mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM
+```
+Run device update:
+```
+mbed dm update device -D 0170a6e08345000000000001001a30be -m NUCLEO_H743ZI2 --no-cleanup
+
+[mbed] Working path "/Users/miclub01/GIT/sensor2cloud" (program)
+[INFO] 2020-03-04 10:58:43 - manifesttool.update_device - Using sensor2cloud_update.bin-2020-03-04T10:58:43 as payload name.
+[INFO] 2020-03-04 10:58:43 - manifesttool.update_device - Using sensor2cloud_update.bin-2020-03-04T10:58:43-manifest as manifest name.
+[INFO] 2020-03-04 10:58:44 - manifesttool.update_device - Created new firmware at http://firmware-catalog-media-ca57.s3.dualstack.us-east-1.amazonaws.com/sensor2cloud_update_0de5abe0583043409985d246df2b9284.bin
+[INFO] 2020-03-04 10:58:44 - manifesttool.update_device - Created temporary manifest file at /var/folders/jg/wxg_cwrx5_n90vf4vt8883nh0000gn/T/tmpri0jxp6m/manifest
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Created new manifest at http://firmware-catalog-media-ca57.s3.dualstack.us-east-1.amazonaws.com/manifest_42cfc977f0be4218b9663f7e440085e1
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Manifest ID: 0170a6ea1abb00000000000100100234
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Campaign successfully created. Current state: 'draft'
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Campaign successfully created. Filter result: {'id': {'$eq': '0170a6e08345000000000001001a30be'}}
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Starting the update campaign...
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Campaign successfully started. Current state: 'scheduled'. Checking updates..
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Current state: 'checkedmanifest'
+[INFO] 2020-03-04 10:58:45 - manifesttool.update_device - Current state: 'devicecopy'
+[INFO] 2020-03-04 10:58:46 - manifesttool.update_device - Current state: 'publishing'
+[INFO] 2020-03-04 11:01:48 - manifesttool.update_device - Current state: 'autostopped'
+[INFO] 2020-03-04 11:01:48 - manifesttool.update_device - Finished in state: 'autostopped'
+
+At this moment  the new image  deployed to board !
 ```
 
 ### Get a device cerificate: download  mbed_cloud_dev_credentials.c from Pelion Device Manager
@@ -60,23 +95,8 @@ This is the important lines in the file, which can be tracked in Pelion Web UI
 const char MBED_CLOUD_DEV_BOOTSTRAP_ENDPOINT_NAME[] = "017064b32c8c724d89b03fd003c00000";  // Pelion deviceId
 const char MBED_CLOUD_DEV_ACCOUNT_ID[] =  "0170a2c070bf000000000001001883bd";  // Pelion campain id
 ```
-### Configure Mbed CLI to use your Device Management account and board
-```
-mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>
-```
-### Generate binary
-```
-mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM
-```
-If everyting works as expected you will see the line:
 
-Image: ./BUILD/NUCLEO_H743ZI2/GCC_ARM/sensor2cloud.bin
 
-There are 3 bin files generated for the main application
-
-*  "[ProjectName].bin - The full image, it combines the application with the bootloader and metadata, and is used for the initial programming of the device
-*  "[ProjectName]_application.bin"  - the same as [ProjectName]_update.bin. It contains only the application and is used for updating the device
-*  "[ProjectName]_update.bin"       - the same as [ProjectName]_application.bin. It contains only the application and is used for updating the device
 
 ### Initialize the firmware update credentials
 

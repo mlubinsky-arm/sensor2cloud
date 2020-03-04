@@ -161,7 +161,7 @@ void sensors_update() {
     td_buff[x]=0; //null terminate string
 
     int result = td->sendData(td_buff,strlen(td_buff));
-    printf("NEW IMAGE result=%d \n", result);
+    printf("mARCH4 NEW IMAGE result=%d \n", result);
 
 }
 
