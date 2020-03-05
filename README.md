@@ -52,7 +52,7 @@ cd ~/sensor2cloud
 mbed deploy  // to get all dependencies described in files with .lib extension
 mbed ls .    // see dependecy and lib versions 
 mbed config -G CLOUD_SDK_API_KEY <PELION_DM_API_KEY>
-mbed dm init -d "arm.com" --model-name "mbed" -q –-force
+mbed dm init -d "arm.com" --model-name "mbed" -q --force
 mbed compile -m NUCLEO_H743ZI2 -t GCC_ARM --flash -DRESET_STORAGE
 Comment: flag -DRESET_STORAGE should be applied only once  
 
